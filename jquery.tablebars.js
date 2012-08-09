@@ -1,5 +1,5 @@
 // jquery tablebars plugin
-// version 0.2a
+// version 0.3
 // usage: $('table').tablebars()
 // to turn on bars for a column, add the 'data-tablebars=1' class to the corresponding
 // header. By default, the bars have no style. An example css declartion is:
@@ -28,6 +28,11 @@ jQuery.fn.tablebars = function(){
       set.each(function(i, cell){
         var rawvalue = rawdata[i] = $(cell).html();
         var value = data[i] = Math.max(0, parseFloat(rawvalue.replace(/[^0-9.\-]+/g, '')));
+        if (rawvalue[rawvalue.length - 1] == "%") {
+          // TODO this percent logic is O(N) when it only needs to be O(1)
+          max = 100;
+          return;
+        }
         if (!isNaN(value) && value > max){
           max = value;
         }
