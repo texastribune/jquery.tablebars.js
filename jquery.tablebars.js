@@ -28,7 +28,9 @@ jQuery.fn.tablebars = function(){
       set.each(function(i, cell){
         var rawvalue = rawdata[i] = $(cell).html();
         var value = data[i] = Math.max(0, parseFloat(rawvalue.replace(/[^0-9.\-]+/g, '')));
-        max = Math.max(max, value);
+        if (!isNaN(value) && value > max){
+          max = value;
+        }
       });
       if (!max) max = 1;
       set.each(function(i, cell){
